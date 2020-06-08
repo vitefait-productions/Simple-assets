@@ -1,5 +1,5 @@
 # Simple-assets
  
-Some simple assets to kickstart a Unity project.
+Simple assets to kickstart Unity projects.
 
-Unity version: 2017.4.40f1
+Using Unity 2017.4.40f1
