@@ -13,7 +13,7 @@ public class VRPrinterFullLog : MonoBehaviour
 
     void Reset()
     {
-        this.RenameFromType();
+        gameObject.name = typeof(VRPrinterFullLog).ToString();
     }
 
     void Awake()
