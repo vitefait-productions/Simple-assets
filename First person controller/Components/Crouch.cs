@@ -19,6 +19,7 @@ namespace VitefFirstPerson
 
         public KeyCode[] keys = new KeyCode[] { KeyCode.LeftControl, KeyCode.RightControl };
         public bool IsCrouched { get; private set; }
+        public event System.Action CrouchStart, CrouchEnd;
 
 
         void Reset()
@@ -45,7 +46,6 @@ namespace VitefFirstPerson
             if (IsKeyPressed(keys))
             {
                 // Enforce crouched y local position of the head.
-                IsCrouched = true;
                 head.localPosition = new Vector3(head.localPosition.x, crouchYLocalPosition, head.localPosition.z);
 
                 // Lower the capsule collider.
@@ -54,11 +54,17 @@ namespace VitefFirstPerson
                     capsuleCollider.height = defaultCapsuleColliderHeight - (defaultHeadYLocalPosition - crouchYLocalPosition);
                     capsuleCollider.center = Vector3.up * capsuleCollider.height * .5f;
                 }
+
+                // Set state.
+                if (!IsCrouched)
+                {
+                    IsCrouched = true;
+                    CrouchStart?.Invoke();
+                }
             }
             else if (IsCrouched)
             {
                 // Reset the head to its default y local position.
-                IsCrouched = false;
                 head.localPosition = new Vector3(head.localPosition.x, defaultHeadYLocalPosition, head.localPosition.z);
 
                 // Reset the capsule collider's position.
@@ -67,6 +73,10 @@ namespace VitefFirstPerson
                     capsuleCollider.height = defaultCapsuleColliderHeight;
                     capsuleCollider.center = Vector3.up * capsuleCollider.height * .5f;
                 }
+
+                // Reset state.
+                IsCrouched = false;
+                CrouchEnd?.Invoke();
             }
         }
 
