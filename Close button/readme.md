@@ -1,1 +1,1 @@
-<img src="/Images/Flat%20colors.jpg"></img>
+<img src="preview.jpg"></img>
